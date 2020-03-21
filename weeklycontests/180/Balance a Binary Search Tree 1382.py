@@ -49,6 +49,8 @@ class TreeNode:
         self.left = None
         self.right = None
 
+        
+# == sol 1 DFS
 class Solution: # sol 1 DFS
     def __init__(self):
         self.res = []
@@ -60,12 +62,12 @@ class Solution: # sol 1 DFS
         root.left = self._sortedBST(start, mid-1)
         root.right = self._sortedBST(mid+1, end)
         return root
+
     
     def _inorder_dfs(self, root : TreeNode):
-        if root.left:
+        if root:
             self._inorder_dfs(root.left)
-        self.res.append(root)
-        if root.right:
+            self.res.append(root)
             self._inorder_dfs(root.right)
         
     
@@ -73,7 +75,7 @@ class Solution: # sol 1 DFS
         self._inorder_dfs(root)
         return self._sortedBST(0, len(self.res)-1)
                 
-        
+ # == sol 2 BFS       
  class Solution: # sol 2 BFS
     def __init__(self):
         self.res = []
@@ -102,7 +104,28 @@ class Solution: # sol 1 DFS
         return self._buildBalanceBST(self.res)       
         
 
-
-
+# == sol 3
+class Solution: 
+    def __init__(self):
+        self.res = []
+        
+    def _sortedBST(self, nodes : List[TreeNode])->TreeNode:
+        if not nodes: return None
+        mid = len(nodes)//2
+        root = nodes[mid]
+        root.left = self._sortedBST(nodes[:mid])
+        root.right = self._sortedBST(nodes[mid+1:])
+        return root
+    
+    def _inorder_dfs(self, root : TreeNode):
+        if root:
+            self._inorder_dfs(root.left)
+            self.res.append(root)
+            self._inorder_dfs(root.right)
+        
+    
+    def balanceBST(self, root: TreeNode) -> TreeNode:
+        self._inorder_dfs(root)
+        return self._sortedBST(self.res)
 
 
