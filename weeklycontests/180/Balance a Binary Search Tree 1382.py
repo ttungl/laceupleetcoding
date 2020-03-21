@@ -49,7 +49,7 @@ class TreeNode:
         self.left = None
         self.right = None
 
-class Solution:
+class Solution: # sol 1 DFS
     def __init__(self):
         self.res = []
         
@@ -74,7 +74,32 @@ class Solution:
         return self._sortedBST(0, len(self.res)-1)
                 
         
-        
+ class Solution: # sol 2 BFS
+    def __init__(self):
+        self.res = []
+    
+    def _inorder_BFS(self, root : TreeNode):
+        stack = []
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            self.res.append(root)
+            root = root.right
+    
+    def _buildBalanceBST(self, root: List[TreeNode]) -> TreeNode:
+        if not root: 
+            return None
+        mid = len(root)//2
+        node = root[mid]
+        node.left = self._buildBalanceBST(root[:mid])
+        node.right = self._buildBalanceBST(root[mid+1:])
+        return node
+    
+    def balanceBST(self, root : TreeNode) -> TreeNode:
+        self._inorder_BFS(root)
+        return self._buildBalanceBST(self.res)       
         
 
 
