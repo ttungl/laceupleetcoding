@@ -11,13 +11,8 @@ class Solution:
 		self.res = []
 
 	def _find_median(self, arr):
-		ans = 0
+		ans, n = 0, len(arr)
 		arr.sort()
-		n = len(arr)
-		if n==0:
-			return
-		if n==1:
-			return arr[0]
 		if n%2==0:
 			ans = (arr[n//2 - 1] + arr[n//2])/2
 		else:
